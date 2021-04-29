@@ -53,3 +53,14 @@ def mte_temp_set(self, set_point):
     mte.temp_set = set_point
     self.output('Temperature set to: \t {:0.1f} C'.format(mte.temp_set))
 
+
+@macro()
+def mte_check(self):
+    """Macro tape_check"""
+    mte = DeviceProxy(mte_device_name)
+    if mte.temp_read < -38:
+        # all fine
+        pass
+    else:
+        # mte not cool
+        self.warning('MTE not at -40C')
